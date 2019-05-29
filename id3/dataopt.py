@@ -24,7 +24,7 @@ veil_type = ['p','u']
 veil_color = ['n','o','w','y']
 ring_number = ['n','o','t']
 ring_type = ['c','e','f','l','n','p','s','z']
-spore_print = ['k','n','b','h','r','o','u','w','y']
+spore_print_color = ['k','n','b','h','r','o','u','w','y']
 population = ['a','c','n','s','v','y']
 habitat = ['g','l','m','p','u','w','d']
 
@@ -33,17 +33,22 @@ dic = {'cap_shape':cap_shape,'cap_surface':cap_surface,'cap_color':cap_color,'br
        'gill_color':gill_color,'stalk_shape':stalk_shape,'stalk_root':stalk_root,'stalk_surface_above_ring':stalk_surface_above_ring,
        'stalk_surface_below_ring':stalk_surface_below_ring,'stalk_color_above_ring':stalk_color_above_ring,
        'stalk_color_below_ring':stalk_color_below_ring,'veil_type':veil_type,'veil_color':veil_color,
-       'ring_number':ring_number,'ring_type':ring_type,'spore_print':spore_print,'population':population,'habitat':habitat}
+       'ring_number':ring_number,'ring_type':ring_type,'spore_print_color':spore_print_color,'population':population,'habitat':habitat}
 data = pd.read_csv('../data/mushrooms.csv')
 print(data.shape)
 
 data.loc[data['class'] == 'p','class'] = 1
+data.loc[data['class'] == 'e','class'] = 0
 print(data)
 
 def changeCToNum(data,columnName,list):
     for i in range(list.__len__()):
-        data.loc[data[columnName]==list[i],columnName] = i
+        data.loc[data[columnName] == list[i],columnName] = i
+
+
 for k in dic.keys():
-    # changeCToNum(data,k,dic[k])
+    changeCToNum(data,k,dic[k])
     print(k,dic[k])
-# print(data)
+
+print(data)
+data.to_csv('../data/new.csv')
